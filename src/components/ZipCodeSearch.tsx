@@ -1,49 +1,28 @@
-// src/components/ZipcodeSearch.tsx
-"use client"; // Add this line
+"use client"; // Ensure this is treated as a client component
 
-import { useState } from 'react';
-import { useGetParksByZipcodeQuery } from '../services/npsApi';
+import React, { useState } from 'react';
+import ParkList from './ParkList'; // Import ParkList component
+import { useGetParksByZipcodeQuery } from '../services/npsApi'; // Import the RTK Query hook
 
-const ZipcodeSearch = () => {
-  const [zipcode, setZipcode] = useState('');
-  const { data, error, isLoading } = useGetParksByZipcodeQuery(zipcode, {
-    skip: !zipcode,
-  });
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+export default function ZipCodeSearch() {
+  const [zipcode, setZipcode] = useState<string>('');
+  const [submittedZipcode, setSubmittedZipcode] = useState<string | null>(null);
+  
+  const handleSearch = () => {
+    setSubmittedZipcode(zipcode); // Set the submitted zip code for search
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
-      <form onSubmit={handleSearch} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Enter zipcode"
-          value={zipcode}
-          onChange={(e) => setZipcode(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2 w-full"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          Search
-        </button>
-      </form>
+    <div>
+      <input
+        type="text"
+        placeholder="Enter Zip Code"
+        value={zipcode}
+        onChange={(e) => setZipcode(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search Parks</button>
 
-      {isLoading && <div className="text-center">Loading parks near {zipcode}...</div>}
-      {error && <div className="text-center text-red-500">Error fetching parks</div>}
-
-      {data && (
-        <div className="space-y-4">
-          {data.data.map((park) => (
-            <div key={park.id} className="bg-white p-4 rounded-lg shadow-md">
-              <h2 className="text-xl font-bold">{park.fullName}</h2>
-              <p className="text-gray-700">{park.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      {submittedZipcode && <ParkList zipcode={submittedZipcode} />}
     </div>
   );
-};
-
-export default ZipcodeSearch;
+}

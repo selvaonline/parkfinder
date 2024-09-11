@@ -1,24 +1,29 @@
-// src/components/ParkList.tsx
-"use client"; // Add this line
+"use client";
 
-import { useGetParksQuery } from '../services/npsApi';
+import React from 'react';
+import { useGetParksByZipcodeQuery } from '../services/npsApi'; // Fetch parks using RTK Query
 
-const ParkList = () => {
-  const { data, error, isLoading } = useGetParksQuery();
+interface ParkListProps {
+  zipcode: string;
+}
 
-  if (isLoading) return <div className="text-center">Loading parks...</div>;
-  if (error) return <div className="text-center text-red-500">Error loading parks</div>;
+export default function ParkList({ zipcode }: ParkListProps) {
+  const { data, error, isLoading } = useGetParksByZipcodeQuery(zipcode);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching parks</div>;
 
   return (
-    <div className="space-y-4">
-      {data?.data.map((park) => (
-        <div key={park.id} className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold">{park.fullName}</h2>
-          <p className="text-gray-700">{park.description}</p>
-        </div>
-      ))}
+    <div>
+      <h2>Parks Near {zipcode}</h2>
+      <ul>
+        {data?.data.map((park: any) => (
+          <li key={park.id}>
+            <h3>{park.fullName}</h3>
+            <p>{park.description}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default ParkList;
+}
