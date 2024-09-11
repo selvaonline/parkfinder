@@ -1,4 +1,3 @@
-// src/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { npsApi } from './services/npsApi';

@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const API_KEY = process.env.NEXT_PUBLIC_NPS_API_KEY;
+console.log("API_KEY", API_KEY);
 
 export const npsApi = createApi({
   reducerPath: 'npsApi',
