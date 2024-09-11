@@ -1,4 +1,6 @@
 // src/components/ZipcodeSearch.tsx
+"use client"; // Add this line
+
 import { useState } from 'react';
 import { useGetParksByZipcodeQuery } from '../services/npsApi';
 

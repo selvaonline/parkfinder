@@ -1,17 +1,38 @@
-// pages/index.tsx
-import ParkList from '../components/ParkList';
-import ZipcodeSearch from '../components/ZipCodeSearch';
+"use client";
 
-const Home = () => {
+import React from 'react';
+import { useGetParksByZipcodeQuery } from '../services/npsApi';
+
+function Page() {
+  const { data, error, isLoading } = useGetParksByZipcodeQuery('12345'); // Corrected function name
+
+  // Example of where the error might be occurring
+  const t = data; // Assuming 'data' is the object being destructured
+
+  // Add a check for null or undefined
+  if (t && 'store' in t) {
+    const { store } = t;
+    // ... use store here ...
+  }
+
+  const store = { name: "Sample Store", description: "This is a sample store." }; // Define store
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-center text-4xl font-bold my-6">National Parks Explorer</h1>
-      <h2 className="text-2xl font-bold mb-4">Random Parks:</h2>
-      <ParkList />
-      <h2 className="text-2xl font-bold my-6">Search Parks by Zipcode:</h2>
-      <ZipcodeSearch />
+    <div>
+      {isLoading && <div>Loading...</div>}
+      {error && (
+        <div>
+          Error: { 'status' in error ? error.status : 'message' in error ? error.message : 'Unknown error' }
+        </div>
+      )}
+      {store && (
+        <div>
+          <h1>{store.name}</h1>
+          <p>{store.description}</p>
+        </div>
+      )}
     </div>
   );
-};
+}
 
-export default Home;
+export default Page;

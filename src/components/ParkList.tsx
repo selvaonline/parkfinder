@@ -1,4 +1,6 @@
 // src/components/ParkList.tsx
+"use client"; // Add this line
+
 import { useGetParksQuery } from '../services/npsApi';
 
 const ParkList = () => {
