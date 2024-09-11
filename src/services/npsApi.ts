@@ -1,3 +1,4 @@
+// src/services/npsApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const API_KEY = process.env.NEXT_PUBLIC_NPS_API_KEY;
@@ -13,3 +14,4 @@ export const npsApi = createApi({
 });
 
 export const { useGetParksByZipcodeQuery } = npsApi;
+
