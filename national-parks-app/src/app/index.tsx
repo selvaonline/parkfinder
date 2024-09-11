@@ -1,6 +1,6 @@
 // pages/index.tsx
-import ParkList from '../src/components/ParkList';
-import ZipcodeSearch from '../src/components/ZipcodeSearch';
+import ParkList from '../components/ParkList';
+import ZipcodeSearch from '../components/ZipCodeSearch';
 
 const Home = () => {
   return (
